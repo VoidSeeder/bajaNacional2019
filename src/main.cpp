@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <GerenciadorDeProcessos.h>
 
-#include <Wire.h>        //Biblioteca para manipulação do protocolo I2C
-#include <DS3231.h>      //Biblioteca para manipulação do DS3231
+//#include <Wire.h>        //Biblioteca para manipulação do protocolo I2C
+//#include <DS3231.h>      //Biblioteca para manipulação do DS3231
  
 //DS3231 rtc;              //Criação do objeto do tipo DS3231
 //RTCDateTime dataehora;   //Criação do objeto do tipo RTCDateTime
