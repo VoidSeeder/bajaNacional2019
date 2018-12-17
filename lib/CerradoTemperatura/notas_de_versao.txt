@@ -1,0 +1,8 @@
+CerradoTemperatura Beta 0.1
++Código adptado da versão final, usada no Nacional 2017
+
+Equipe Cerrado
+Competição Baja SAE
+Universidade Federal de Uberlândia
+
+Aviso: NENHUMA informação pode ser APAGADA desse arquivo. As edições feitas devem ter apenas critério de ADIÇÃO, tornando necessário a publicação de uma nova versão caso alguma alteração seja realizada no código.

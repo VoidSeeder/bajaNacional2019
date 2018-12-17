@@ -1,0 +1,20 @@
+CerradoVelocidade Beta 0.1
++Código adptado da versão final, usada no Nacional 2017
++Para usar a biblioteca é nessário adicionar:
+"void interrupcao()
+{
+  objeto.setRotacao(objeto.getRotacao() + 1);
+  objeto.setTempo(millis());
+  objeto.setDeltaT(objeto.getTempo() - objeto.getTempo2());
+
+  objeto.setTempo2(objeto.getTempo());
+}"
+ao escopo livre e
+"attachInterrupt(objeto.getPino(), interrupcao, RISING);"
+em void setup.
+
+Equipe Cerrado
+Competição Baja SAE
+Universidade Federal de Uberlândia
+
+Aviso: NENHUMA informação pode ser APAGADA desse arquivo. As edições feitas devem ter apenas critério de ADIÇÃO, tornando necessário a publicação de uma nova versão caso alguma alteração seja realizada no código.
