@@ -30,7 +30,7 @@ public:
   void introducao();
   void telaPrincipal();
   void telaVelocidade();
-  void telaTempo();
+  void telaTempo(int dia, int mes, int ano);
   void telaTemperatura();
   void atualizar(int velocidade, int hora, int min, int tempMotor,
                  int tempCvt, boolean combustivel, float voltagem);

@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include <SofwareSerial.h>
+#include <SoftwareSerial.h>
 
 class CerradoTelemetria
 {
@@ -12,7 +12,7 @@ private:
     String chave;
     String message;
 public:
-    CerradoTelemetria(SofwareSerial* mySerial, String chave);
+    CerradoTelemetria(SoftwareSerial* mySerial, String chave);
     void registrar(int temp1, int temp2, int velocidade, int voltage, bool comb);
     void enviar();
 };

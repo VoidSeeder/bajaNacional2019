@@ -13,7 +13,7 @@ CerradoBateria::CerradoBateria(int pino)
 void CerradoBateria::calcularTensao()
 {
   sensorValue = analogRead(porta);
-  voltage = ((float)sensorValue) * (12.0 / 1023.0);
+  voltage = ((float)sensorValue) * (12.6 / 1023.0);
   voltage2 = voltage;
 }
 

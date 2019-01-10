@@ -398,7 +398,7 @@ void CerradoDisplay::atualizar(int velocidade)
 }
 
 //TELA 2 (tempo)
-void CerradoDisplay::telaTempo()
+void CerradoDisplay::telaTempo(int dia, int mes, int ano)
 {
     display->setRotation(1);
 
@@ -438,7 +438,11 @@ void CerradoDisplay::telaTempo()
     display->setTextSize(1);
     display->setTextColor(WHITE);
     display->setCursor(30, 270);
-    display->print("13/11/2018");
+    display->print(dia);
+    display->print("/");
+    display->print(mes);
+    display->print("/");
+    display->print(ano);
 }
 
 void CerradoDisplay::atualizar(int hora, int minuto, int segundo)

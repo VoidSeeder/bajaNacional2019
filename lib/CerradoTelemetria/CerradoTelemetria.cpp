@@ -159,3 +159,8 @@ void CerradoTelemetria::registrar(int temp1, int temp2, int velocidade, int volt
 void CerradoTelemetria::enviar(){
     this->mySerial->print(this->message);
 }
+
+CerradoTelemetria::CerradoTelemetria (SoftwareSerial* mySerial, String chave){
+  this->mySerial = mySerial;
+  this->chave = chave;
+}

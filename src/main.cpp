@@ -7,6 +7,8 @@
 //DS3231 rtc;              //Criação do objeto do tipo DS3231
 //RTCDateTime dataehora;   //Criação do objeto do tipo RTCDateTime
 
+#include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
+
 #include "MCUFRIEND_kbv.h"
 MCUFRIEND_kbv tft;
 
@@ -16,26 +18,31 @@ CerradoTemperatura term;
 #include "CerradoDisplay.h"
 CerradoDisplay tela(&tft);
 
-#define PINO1 40
-#define PINO2 41
+#define PINO1 20
+#define PINO2 21
 
 #include "CerradoCombustivel.h"
 CerradoCombustivel ppk(PINO1, PINO2);
 
-#define PININT 21
+#define PININT 18
 
 #include "CerradoVelocidade.h"
 CerradoVelocidade velocidade(PININT);
 
 #include "CerradoBateria.h"
-CerradoBateria bateria(A15);
+CerradoBateria bateria(A8);
+
+#include "SoftwareSerial.h"
+SoftwareSerial mySerial(15, 14);
+
+#include "CerradoTelemetria.h"
+CerradoTelemetria HC12(&mySerial, "110000111");
 
 int cont = 0;
 
 void mudar();
 
-void interrupcao()
-{
+void interrupcao() {
   velocidade.setRotacao(velocidade.getRotacao() + 1);
   velocidade.setTempo(millis());
   velocidade.setDeltaT(velocidade.getTempo() - velocidade.getTempo2());
@@ -47,7 +54,9 @@ void interrupcao()
 
 void setup() {
   tft.begin(tft.readID());
-  Serial.begin(9600);
+  //Serial.begin(9600);
+
+  setSyncProvider(RTC.get);   // the function to get the time from the RTC
 
   //rtc.begin();            //Inicialização do RTC DS3231
  
@@ -57,18 +66,19 @@ void setup() {
 
   //tela.introducao();
 
-  tela.telaPrincipal();
+  //tela.telaPrincipal();
 
   //tela.telaVelocidade();
 
-  //tela.telaTempo();
+  tela.telaTempo(day(), month(), year());
 
   //tela.telaTemperatura();
 
   attachInterrupt(digitalPinToInterrupt(19), mudar, FALLING);
+  attachInterrupt(digitalPinToInterrupt(18), interrupcao, FALLING);
 }
 
-int n = 0;
+int n = 2;
 //int cont = 0;
 int hora = 0, minuto = 0, segundo = 0;
 int tempMotor = 9, tempCvt = 73;
@@ -81,10 +91,12 @@ void loop() {
       velocidade.calcularVelocidade(0);
       term.calcularTemperatura();
       //tela.atualizar(velocidade.getVelocidadeA());
-      //ppk.verificarCombustivel();
-      //bateria.calcularTensao();
+      ppk.verificarCombustivel();
+      bateria.calcularTensao();
       //dataehora = rtc.getDateTime();
-      tela.atualizar(15, 11, 50, 95, 99, 1, 11.5);
+      tela.atualizar(velocidade.getVelocidadeA(), hour(), minute(), term.getTempC(), term.getTempC(), ppk.getCombustivel(), bateria.getVoltage2());
+      HC12.registrar(term.getTempC(), term.getTempC(), velocidade.getVelocidadeA(), bateria.getVoltage2(), ppk.getCombustivel());
+      HC12.enviar();
       delay(200);
       interrupts();
       break;
@@ -99,7 +111,7 @@ void loop() {
     case 2:
       noInterrupts();
       //dataehora = rtc.getDateTime();
-      //tela.atualizar(dataehora.hour, dataehora.minute, dataehora.second);
+      tela.atualizar(hour(), minute(), second());
       interrupts();
       break;
     case 3:
@@ -129,7 +141,7 @@ void mudar()
       tela.telaVelocidade();
       break;
     case 2:
-      tela.telaTempo();
+      tela.telaTempo(day(), month(), year());
       break;
     case 3:
       tela.telaTemperatura();
