@@ -157,10 +157,20 @@ void CerradoTelemetria::registrar(int temp1, int temp2, int velocidade, int volt
 }
 
 void CerradoTelemetria::enviar(){
-    this->mySerial->print(this->message);
+  LoRa.beginPacket();
+  LoRa.print(this->message);
+  LoRa.endPacket();
 }
 
-CerradoTelemetria::CerradoTelemetria (SoftwareSerial* mySerial, String chave){
-  this->mySerial = mySerial;
+CerradoTelemetria::CerradoTelemetria (String chave){
   this->chave = chave;
+
+  LoRa.setPins(22, 24, 26);
+  
+  LoRa.begin(433E6);
+  
+  LoRa.setTxPower(20);
+  LoRa.setFrequency(433E6);
+  LoRa.setSpreadingFactor(12);
+  LoRa.setSignalBandwidth(125E3);
 }

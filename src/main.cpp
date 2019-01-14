@@ -32,11 +32,8 @@ CerradoVelocidade velocidade(PININT);
 #include "CerradoBateria.h"
 CerradoBateria bateria(A8);
 
-#include "SoftwareSerial.h"
-SoftwareSerial mySerial(15, 14);
-
 #include "CerradoTelemetria.h"
-CerradoTelemetria HC12(&mySerial, "110000111");
+CerradoTelemetria HC12("110000111");
 
 int cont = 0;
 

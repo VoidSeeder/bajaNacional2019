@@ -3,16 +3,15 @@
 
 #include <Arduino.h>
 
-#include <SoftwareSerial.h>
+#include <LoRa.h>
 
 class CerradoTelemetria
 {
 private:
-    SoftwareSerial *mySerial;
     String chave;
     String message;
 public:
-    CerradoTelemetria(SoftwareSerial* mySerial, String chave);
+    CerradoTelemetria(String chave);
     void registrar(int temp1, int temp2, int velocidade, int voltage, bool comb);
     void enviar();
 };
