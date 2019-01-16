@@ -18,8 +18,10 @@ CerradoVelocidade::CerradoVelocidade(int p)
     CerradoVelocidade::pino = p;
 }
 
-void CerradoVelocidade::calcularVelocidade(int addr)
+void CerradoVelocidade::calcularVelocidade()
 {
+    int addr = 0;
+
     CerradoVelocidade::currentMillis = millis(); //Armazena o tempo do calculo atual
     if ((CerradoVelocidade::currentMillis - CerradoVelocidade::previousMillis) >= CerradoVelocidade::Tcoleta) //Condicao para garantir que a velocidade sera atualizada a cada 250 millis (tempo de coleta)
     {

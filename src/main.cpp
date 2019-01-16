@@ -1,12 +1,6 @@
 #include <Arduino.h>
 #include <GerenciadorDeProcessos.h>
 
-//#include <Wire.h>        //Biblioteca para manipulação do protocolo I2C
-//#include <DS3231.h>      //Biblioteca para manipulação do DS3231
- 
-//DS3231 rtc;              //Criação do objeto do tipo DS3231
-//RTCDateTime dataehora;   //Criação do objeto do tipo RTCDateTime
-
 #include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
 
 #include "MCUFRIEND_kbv.h"
@@ -25,7 +19,7 @@ CerradoDisplay tela(&tft);
 CerradoCombustivel ppk(PINO1, PINO2);
 
 #define PININT 18
-
+ 
 #include "CerradoVelocidade.h"
 CerradoVelocidade velocidade(PININT);
 
@@ -55,10 +49,6 @@ void setup() {
 
   setSyncProvider(RTC.get);   // the function to get the time from the RTC
 
-  //rtc.begin();            //Inicialização do RTC DS3231
- 
-  //rtc.setDateTime(__DATE__, __TIME__);
-
   //attachInterrupt(digitalPinToInterrupt(21), interrupcao, FALLING);
 
   //tela.introducao();
@@ -76,7 +66,6 @@ void setup() {
 }
 
 int n = 2;
-//int cont = 0;
 int hora = 0, minuto = 0, segundo = 0;
 int tempMotor = 9, tempCvt = 73;
 
@@ -85,12 +74,11 @@ void loop() {
   {
     case 0:
       noInterrupts();
-      velocidade.calcularVelocidade(0);
+      velocidade.calcularVelocidade();
       term.calcularTemperatura();
       //tela.atualizar(velocidade.getVelocidadeA());
       ppk.verificarCombustivel();
       bateria.calcularTensao();
-      //dataehora = rtc.getDateTime();
       tela.atualizar(velocidade.getVelocidadeA(), hour(), minute(), term.getTempC(), term.getTempC(), ppk.getCombustivel(), bateria.getVoltage2());
       HC12.registrar(term.getTempC(), term.getTempC(), velocidade.getVelocidadeA(), bateria.getVoltage2(), ppk.getCombustivel());
       HC12.enviar();
@@ -99,15 +87,13 @@ void loop() {
       break;
     case 1:
       noInterrupts();
-      velocidade.calcularVelocidade(0);
+      velocidade.calcularVelocidade();
       tela.atualizar(velocidade.getVelocidadeA());
       interrupts();
       delay(200);
-      //(cont == 99) ? cont = 0 : cont++;
       break;
     case 2:
       noInterrupts();
-      //dataehora = rtc.getDateTime();
       tela.atualizar(hour(), minute(), second());
       interrupts();
       break;
@@ -125,8 +111,7 @@ void loop() {
   }
 }
 
-void mudar()
-{
+void mudar() {
   (n == 3) ? n = 0 : n++;
 
   switch (n)

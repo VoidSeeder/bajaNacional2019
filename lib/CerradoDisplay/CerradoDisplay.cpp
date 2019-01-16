@@ -1,12 +1,10 @@
 #include "CerradoDisplay.h"
 
-CerradoDisplay::CerradoDisplay(MCUFRIEND_kbv *_display)
-{
+CerradoDisplay::CerradoDisplay(MCUFRIEND_kbv *_display) {
     display = _display;
 }
 
-void CerradoDisplay::introducao()
-{
+void CerradoDisplay::introducao() {
     display->setRotation(1);
 
     int r1 = 220, g1 = 190, b1 = 100;
@@ -64,8 +62,7 @@ void CerradoDisplay::introducao()
 }
 
 //tela 0 (PRINCIPAL)
-void CerradoDisplay::telaPrincipal()
-{
+void CerradoDisplay::telaPrincipal() {
     display->setRotation(1);
 
     int x = 30, y = 35, n = 4;
@@ -214,8 +211,7 @@ void CerradoDisplay::telaPrincipal()
 }
 
 void CerradoDisplay::atualizar(int velocidade, int hora, int min, int tempMotor,
-                               int tempCvt, boolean combustivel, float voltagem)
-{
+                               int tempCvt, boolean combustivel, float voltagem) {
     int dezena = velocidade / 10, unidade = velocidade % 10;
 
     velDezena->printarNumero(dezena);
@@ -279,8 +275,7 @@ void CerradoDisplay::atualizar(int velocidade, int hora, int min, int tempMotor,
 }
 
 //TELA 1 (velocidade)
-void CerradoDisplay::telaVelocidade()
-{
+void CerradoDisplay::telaVelocidade() {
     display->setRotation(1);
 
     display->fillScreen(GREY);
@@ -369,8 +364,7 @@ void CerradoDisplay::telaVelocidade()
     */
 }
 
-void CerradoDisplay::atualizar(int velocidade)
-{
+void CerradoDisplay::atualizar(int velocidade) {
     //kph
     int dezena = velocidade / 10, unidade = velocidade % 10;
 
@@ -398,8 +392,7 @@ void CerradoDisplay::atualizar(int velocidade)
 }
 
 //TELA 2 (tempo)
-void CerradoDisplay::telaTempo(int dia, int mes, int ano)
-{
+void CerradoDisplay::telaTempo(int dia, int mes, int ano) {
     display->setRotation(1);
 
     display->fillScreen(GREY);
@@ -445,8 +438,7 @@ void CerradoDisplay::telaTempo(int dia, int mes, int ano)
     display->print(ano);
 }
 
-void CerradoDisplay::atualizar(int hora, int minuto, int segundo)
-{
+void CerradoDisplay::atualizar(int hora, int minuto, int segundo) {
     int dezena = hora / 10, unidade = hora % 10;
 
     horaDezena->printarNumero(dezena);
@@ -466,8 +458,7 @@ void CerradoDisplay::atualizar(int hora, int minuto, int segundo)
 }
 
 //TELA 3 (temperatura)
-void CerradoDisplay::telaTemperatura()
-{
+void CerradoDisplay::telaTemperatura() {
     display->setRotation(1);
 
     display->fillScreen(GREY);
@@ -546,8 +537,7 @@ void CerradoDisplay::telaTemperatura()
     tempCvtUnidadeF = new Cerrado7Segmentos(372 + 60, 68 + 155, 1, display, RED, WHITE);
 }
 
-void CerradoDisplay::atualizar(int tempMotor, int tempCvt)
-{
+void CerradoDisplay::atualizar(int tempMotor, int tempCvt) {
     //MOTOR
     int centena = tempMotor / 100;
     int dezena = (tempMotor % 100) / 10;

@@ -22,7 +22,7 @@ private:
     int pino;
 public:
     CerradoVelocidade(int p);
-    void calcularVelocidade(int addr);
+    void calcularVelocidade();
     void setRotacao(int r);
     int getRotacao();
     void setTempo(unsigned long t);
