@@ -1,11 +1,13 @@
 //Programa : Teste MPU-6050
 //Alteracoes e adaptacoes : Arduino e Cia
 //
-//Baseado no programa original de JohnChi
+//Baseado no programa original de JohnChi.
  
 //Carrega a biblioteca Wire
 #include <Wire.h>
- 
+
+#include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
+
 //Endereco I2C do MPU6050
 const int MPU=0x68;  
 
@@ -22,7 +24,8 @@ void setup()
   //Inicializa o MPU-6050
   Wire.write(0); 
   Wire.endTransmission(true);
-    
+
+  setSyncProvider(RTC.get);
 }
 
 void loop()
@@ -52,8 +55,13 @@ void loop()
   Serial.print(" | Y = "); Serial.print(GyY);
   Serial.print(" | Z = "); Serial.print(GyZ);
   Serial.print(" | Temp = "); Serial.println(Tmp/340.00+36.53);
+  Serial.print(hour()); Serial.print(":");
+  Serial.print(minute()); Serial.print(":");
+  Serial.print(second()); Serial.print(" - ");
+  Serial.print(day()); Serial.print("/");
+  Serial.print(month()); Serial.print("/");
+  Serial.println(year());
     
   //Aguarda 300 ms e reinicia o processo
   delay(300);
 }
-
