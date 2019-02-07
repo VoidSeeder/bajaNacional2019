@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <GerenciadorDeProcessos.h>
 
-#include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
+//#include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
 
 #include "MCUFRIEND_kbv.h"
 MCUFRIEND_kbv tft;
@@ -26,8 +26,8 @@ CerradoVelocidade velocidade(PININT);
 #include "CerradoBateria.h"
 CerradoBateria bateria(A8);
 
-#include "CerradoTelemetria.h"
-CerradoTelemetria HC12("110000111");
+//#include "CerradoTelemetria.h"
+//CerradoTelemetria HC12("110000111");
 
 int cont = 0;
 
@@ -44,25 +44,27 @@ void interrupcao() {
 }
 
 void setup() {
+  Serial.begin(9600);
+  Serial.println("OLA");
   tft.begin(tft.readID());
   //Serial.begin(9600);
 
-  setSyncProvider(RTC.get);   // the function to get the time from the RTC
+  //setSyncProvider(RTC.get);   // the function to get the time from the RTC
 
   //attachInterrupt(digitalPinToInterrupt(21), interrupcao, FALLING);
 
-  //tela.introducao();
+  tela.introducao();
 
-  //tela.telaPrincipal();
+  tela.telaPrincipal();
 
   //tela.telaVelocidade();
 
-  tela.telaTempo(day(), month(), year());
+  //tela.telaTempo(day(), month(), year());
 
   //tela.telaTemperatura();
 
-  attachInterrupt(digitalPinToInterrupt(19), mudar, FALLING);
-  attachInterrupt(digitalPinToInterrupt(18), interrupcao, FALLING);
+  //attachInterrupt(digitalPinToInterrupt(19), mudar, FALLING);
+  //attachInterrupt(digitalPinToInterrupt(18), interrupcao, FALLING);
 }
 
 int n = 2;
@@ -79,9 +81,9 @@ void loop() {
       //tela.atualizar(velocidade.getVelocidadeA());
       ppk.verificarCombustivel();
       bateria.calcularTensao();
-      tela.atualizar(velocidade.getVelocidadeA(), hour(), minute(), term.getTempC(), term.getTempC(), ppk.getCombustivel(), bateria.getVoltage2());
-      HC12.registrar(term.getTempC(), term.getTempC(), velocidade.getVelocidadeA(), bateria.getVoltage2(), ppk.getCombustivel());
-      HC12.enviar();
+      //tela.atualizar(velocidade.getVelocidadeA(), hour(), minute(), term.getTempC(), term.getTempC(), ppk.getCombustivel(), bateria.getVoltage2());
+      //HC12.registrar(term.getTempC(), term.getTempC(), velocidade.getVelocidadeA(), bateria.getVoltage2(), ppk.getCombustivel());
+      //HC12.enviar();
       delay(200);
       interrupts();
       break;
@@ -94,7 +96,7 @@ void loop() {
       break;
     case 2:
       noInterrupts();
-      tela.atualizar(hour(), minute(), second());
+      //tela.atualizar(hour(), minute(), second());
       interrupts();
       break;
     case 3:
@@ -123,7 +125,7 @@ void mudar() {
       tela.telaVelocidade();
       break;
     case 2:
-      tela.telaTempo(day(), month(), year());
+      //tela.telaTempo(day(), month(), year());
       break;
     case 3:
       tela.telaTemperatura();
